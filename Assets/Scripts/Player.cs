@@ -165,6 +165,16 @@ public class Player : MonoBehaviour
 
     private void doAnimation()
     {
-        anim.SetTrigger("");
+        bool Attack = Input.GetKeyDown(KeyCode.L);
+        bool Jump = Input.GetKeyDown(KeyCode.Space);
+
+        if(Attack == true)
+        {
+            anim.SetTrigger("Attect");
+        }
+        if(Jump == true)
+        {
+            anim.SetTrigger("Jumping");
+        }
     }
 }
