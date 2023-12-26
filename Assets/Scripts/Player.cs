@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
 
     [Header("АјАн")]
     [SerializeField] float hitdamage = 1.0f;
+    [SerializeField] bool Isattack = false;
 
     
 
@@ -54,7 +55,7 @@ public class Player : MonoBehaviour
         jumping();
         checkGravity();
 
-
+        doAnimation();
     }
 
     private void moving()
@@ -159,22 +160,24 @@ public class Player : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.L))
         {
-            
+            Isattack = true;
+            anim.SetTrigger("IsAttack");
+            //Invoke("testFunction", 1.5f);
         }
     }
-
     private void doAnimation()
     {
-        bool Attack = Input.GetKeyDown(KeyCode.L);
-        bool Jump = Input.GetKeyDown(KeyCode.Space);
+        anim.SetBool("Isjump", isGround);
+        anim.SetInteger("Horizontal", (int)moveDir.x);
+        //if (Isattack == true)
+        //{
+        //    anim.SetTrigger("IsAttack");
+        //    Isattack = false;
+        //}
+        //anim.SetBool("attacking", Isattack);
+    }
 
-        if(Attack == true)
-        {
-            anim.SetTrigger("Attect");
-        }
-        if(Jump == true)
-        {
-            anim.SetTrigger("Jumping");
-        }
+    private void testFunction()
+    {
     }
 }
