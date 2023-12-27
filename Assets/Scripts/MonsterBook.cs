@@ -17,13 +17,14 @@ public class MonsterBoo : MonoBehaviour
     [SerializeField] private float jumpForce = 5f;
 
     [Header("∏ÛΩ∫≈Õ Ω∫∆Â")]
-    private float CurHp;
     [SerializeField] float MaxHp = 1.0f;
+    private float CurHp;
     [SerializeField] float MsSpeed = 1.0f;
     [SerializeField] float MsDamage = 1.0f;
 
     private void Awake()
     {
+        CurHp = MaxHp;
         rigid = GetComponent<Rigidbody2D>();
         boxCollider2D = GetComponent<BoxCollider2D>();
         anim = GetComponent<Animator>();
@@ -92,6 +93,16 @@ public class MonsterBoo : MonoBehaviour
         if(gameObject.layer == LayerMask.NameToLayer("Player"))
         {
 
+        }
+    }
+
+    public void MsHit(float _damage)
+    {
+
+        CurHp -= _damage;
+        if(CurHp <= 0)
+        {
+            Destroy(gameObject);
         }
     }
 }

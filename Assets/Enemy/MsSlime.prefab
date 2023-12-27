@@ -12,11 +12,11 @@ GameObject:
   - component: {fileID: 3737079957957420121}
   - component: {fileID: 8641113076427215002}
   - component: {fileID: 3023176220795259696}
-  - component: {fileID: 7257270260469029638}
   - component: {fileID: 8613497378589515364}
+  - component: {fileID: 2764038153802817316}
   m_Layer: 8
   m_Name: MsSlime
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34,7 +34,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3737079957957420121
 SpriteRenderer:
@@ -154,25 +154,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.4931307, y: 0.25813985}
   m_EdgeRadius: 0
---- !u!114 &7257270260469029638
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8559849087094491530}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36a066f41ba8131459b7c28c5242775e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 5
-  isGround: 0
-  gravity: 9.81
-  jumpForce: 5
-  MaxHp: 1
-  MsSpeed: 1
-  MsDamage: 1
 --- !u!50 &8613497378589515364
 Rigidbody2D:
   serializedVersion: 4
@@ -200,3 +181,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &2764038153802817316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8559849087094491530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36a066f41ba8131459b7c28c5242775e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 5
+  isGround: 0
+  gravity: 9.81
+  jumpForce: 5
+  MaxHp: 1
+  MsSpeed: 1
+  MsDamage: 1

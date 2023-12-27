@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     private Camera mainCam;
 
     [Header("공격")]
-    [SerializeField] float hitdamage = 1.0f;
+    [SerializeField] private float hitdamage = 1.0f;
     [SerializeField] bool Isattack = false;
 
     
@@ -60,7 +60,6 @@ public class Player : MonoBehaviour
 
     private void moving()
     {
-
         moveDir.x = Input.GetAxisRaw("Horizontal") * moveSpeed;
         moveDir.y = rigid.velocity.y;
         rigid.velocity = moveDir;
@@ -84,16 +83,16 @@ public class Player : MonoBehaviour
 
     private void turning()
     {
-        if (moveDir.x > 0 && transform.localScale.x > -1)//오른쪽으로 이동중
+        if (moveDir.x > 0 && transform.localScale.x == -1)//오른쪽으로 이동중
         {
             Vector3 scale = transform.localScale;
-            scale.x *= -1;
+            scale.x = 1;
             transform.localScale = scale;
         }
-        else if (moveDir.x < 0 && transform.localScale.x < 1)//왼쪽으로 이동중
+        else if (moveDir.x < 0 && transform.localScale.x == 1)//왼쪽으로 이동중
         {
             Vector3 scale = transform.localScale;
-            scale.x *= -1;
+            scale.x = -1;
             transform.localScale = scale;
         }
     }
