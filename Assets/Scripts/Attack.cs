@@ -11,7 +11,8 @@ public class Attack : MonoBehaviour
     [Header("공격")]
     [SerializeField] float PKdamage = 1.0f;
     [SerializeField] bool Isattack = false;
-    private float damage = 1.0f;
+    private float damage = 0.0f;
+    private bool PlayerAttack = false;//플레이어가 한 공격이면 true
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -20,36 +21,26 @@ public class Attack : MonoBehaviour
             MonsterBoo Msattack = collision.GetComponent<MonsterBoo>();
             Msattack.MsHit(damage);
         }
-
     }
 
-    private void Awake()
+    void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         boxCollider2D = GetComponent<BoxCollider2D>();
     }
 
-    void Update()
+    void Start()
     {
-        Akdamage();
+        
     }
 
-    public void Akdamage()
+    void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            Isattack = true;
-            if (gameObject.layer == LayerMask.NameToLayer("Monster"))
-            {
-                MonsterBoo Msattack = gameObject.GetComponent<MonsterBoo>();
-                Msattack.MsHit(damage);
-                Isattack = false;
-            }
-            else
-            {
-                Isattack = false;
-                return;
-            }
-        }
+        //Akdamage();
+    }
+
+    public void Akdamage(float _damage)
+    {
+        damage = _damage;
     }
 }

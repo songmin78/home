@@ -1,5 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using System.Transactions;
+using UnityEditor.SearchService;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -8,6 +11,8 @@ public class Player : MonoBehaviour
     Vector3 moveDir;//default
     BoxCollider2D boxCollider2D;
     Animator anim;
+    Transform layerDynamic;
+
     [SerializeField] float moveSpeed = 5f;
     [SerializeField] bool isGround = false;//false 공중에 떠있는 상태, true 땅에 붙어있는 상태
 
@@ -17,11 +22,18 @@ public class Player : MonoBehaviour
     [SerializeField] private float jumpForce = 5f;
     private Camera mainCam;
 
-    [Header("공격")]
-    [SerializeField] private float hitdamage = 1.0f;
-    [SerializeField] bool Isattack = false;
+    [Header("프리맵")]
+    [SerializeField] private GameObject objAttack;
 
-    
+    [Header("공격")]
+    [SerializeField] private bool Akchecking = false;//false = 유저가 키를 입력해야 공격
+    [SerializeField] private float hitdamage = 0.0f;//공격데미지
+    private float timer = 0.0f;
+    [SerializeField] bool Isattack = false;
+    [SerializeField, Range(0.0f, 3.0f)] private float timerAttack = 0.5f;//공격하는 기준 
+    //[SerializeField] private float Attackdamage = 0.0f;
+
+    BoxCollider2D atboxcollider;
 
 
     //[Header("벽점프")]
@@ -36,6 +48,7 @@ public class Player : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         boxCollider2D = GetComponent<BoxCollider2D>();
         anim = GetComponent<Animator>();
+        atboxcollider = transform.Find("A").GetComponent<BoxCollider2D>();
     }
     
     void Start()
@@ -50,12 +63,21 @@ public class Player : MonoBehaviour
         moving();
         turning();
 
+        jumping();
         Attackcheck();
 
-        jumping();
         checkGravity();
 
         doAnimation();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Monster")
+        {
+            MonsterBoo Msattack = collision.GetComponent<MonsterBoo>();
+            Msattack.MsHit(hitdamage);
+        }
     }
 
     private void moving()
@@ -159,10 +181,29 @@ public class Player : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.L))
         {
+            if(Isattack == true)
+            {
+                Isattack = false;
+                return;
+            }
             Isattack = true;
             anim.SetTrigger("IsAttack");
             //Invoke("testFunction", 1.5f);
+
         }
+        //if(Akchecking == false && Input.GetKeyDown(KeyCode.L))
+        //{
+        //    ShootAtteck();
+        //}
+        //else if ( Akchecking == true)
+        //{
+            //timer += Time.deltaTime;//타이머증가
+            //if(timerAttack <= timer)//타이머가 기준을 오버하면
+            //{
+            //    ShootAtteck();//공격
+            //    timer = 0.0f;//타이머가 초기화
+            //}
+        //}
     }
     private void doAnimation()
     {
@@ -176,7 +217,24 @@ public class Player : MonoBehaviour
         //anim.SetBool("attacking", Isattack);
     }
 
+    private void ShootAtteck()
+    {
+        GameObject obj = Instantiate(objAttack, transform.position, Quaternion.identity, layerDynamic);
+        Attack objSc = obj.GetComponent<Attack>();
+        objSc.Akdamage(hitdamage);
+    }
+
     private void testFunction()
     {
     }
+
+    private void AttackInBox()
+    {
+        atboxcollider.enabled = true;
+    }
+    private void AttackoutBox()
+    {
+        atboxcollider.enabled = false;
+    }
+    
 }
