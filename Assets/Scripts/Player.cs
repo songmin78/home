@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float hitdamage = 0.0f;//공격데미지
     private float timer = 0.0f;
     [SerializeField] bool Isattack = false;
-    [SerializeField, Range(0.0f, 3.0f)] private float timerAttack = 0.5f;//공격하는 기준 
+    //[SerializeField, Range(0.0f, 3.0f)] private float timerAttack = 0.5f;//공격하는 기준 
     //[SerializeField] private float Attackdamage = 0.0f;
 
     BoxCollider2D atboxcollider;

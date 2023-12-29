@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MonsterBoo : MonoBehaviour
@@ -8,8 +6,9 @@ public class MonsterBoo : MonoBehaviour
     Vector3 moveDir;//default
     BoxCollider2D boxCollider2D;
     Animator anim;
-    [SerializeField] float moveSpeed = 5f;
     [SerializeField] bool isGround = false;
+    [SerializeField] LayerMask ground;
+    [SerializeField] Collider2D trigger;
 
     private bool isJump = false;
     private float verticalVelocity;//수직으로 받는 힘
@@ -21,30 +20,71 @@ public class MonsterBoo : MonoBehaviour
     private float CurHp;
     [SerializeField] float MsSpeed = 1.0f;
     [SerializeField] float MsDamage = 1.0f;
+    [SerializeField] float Msturntime = 1.0f;
+    private float Maxtime;
 
     private void Awake()
     {
         CurHp = MaxHp;
+        Maxtime = Msturntime;
         rigid = GetComponent<Rigidbody2D>();
         boxCollider2D = GetComponent<BoxCollider2D>();
         anim = GetComponent<Animator>();
     }
     void Start()
     {
-        
+
     }
 
     void Update()
     {
         checkGround();
+
+        Msmoving();
+
         checkGravity();
 
         MsAttack();
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "Player")
+        {
+
+        }
+    }
+
     private void Msmoving()
     {
+        if(isGround == false)
+        {
+            return;
+        }
+        rigid.velocity = new Vector2(MsSpeed, rigid.velocity.y);
 
+        if (Maxtime > 0)
+        {
+            Maxtime -= Time.deltaTime;
+        }
+        else if (Maxtime <= 0)
+        {
+            Timeturn();
+            Maxtime = Msturntime;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if(isGround == false)
+        {
+            return;
+        }
+        if (trigger.IsTouchingLayers(ground) == false)
+        {
+            turn();
+        }
+        
     }
 
     private void checkGround()
@@ -88,9 +128,37 @@ public class MonsterBoo : MonoBehaviour
         rigid.velocity = new Vector2(rigid.velocity.x, verticalVelocity);
     }
 
+    private void turn()
+    {
+        Vector3 scale = transform.localScale;
+        scale.x *= -1;
+        transform.localScale = scale;
+
+        MsSpeed *= -1;
+        //Invoke("Timeturn", (float)Msturntime);
+    }
+
+    private void Timeturn()
+    {
+        if (transform.localScale.x == -1)
+        {
+            Vector3 scale = transform.localScale;
+            scale.x = 1;
+            transform.localScale = scale;
+            MsSpeed *= 1;
+        }
+        else if (transform.localScale.x == 1)
+        {
+            Vector3 scale = transform.localScale;
+            scale.x = -1;
+            transform.localScale = scale;
+            MsSpeed *= -1;
+        }
+    }
+
     private void MsAttack()
     {
-        if(gameObject.layer == LayerMask.NameToLayer("Player"))
+        if (gameObject.layer == LayerMask.NameToLayer("Player"))
         {
 
         }
@@ -100,7 +168,7 @@ public class MonsterBoo : MonoBehaviour
     {
 
         CurHp -= _damage;
-        if(CurHp <= 0)
+        if (CurHp <= 0)
         {
             Destroy(gameObject);
         }

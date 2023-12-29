@@ -28,17 +28,6 @@ public class Attack : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         boxCollider2D = GetComponent<BoxCollider2D>();
     }
-
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        //Akdamage();
-    }
-
     public void Akdamage(float _damage)
     {
         damage = _damage;
