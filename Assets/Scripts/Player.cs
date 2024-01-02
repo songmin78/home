@@ -13,7 +13,6 @@ public class Player : MonoBehaviour
     Animator anim;
     Transform layerDynamic;
 
-    [SerializeField] float moveSpeed = 5f;
     [SerializeField] bool isGround = false;//false 공중에 떠있는 상태, true 땅에 붙어있는 상태
 
     private bool isJump = false;
@@ -27,11 +26,17 @@ public class Player : MonoBehaviour
 
     [Header("공격")]
     [SerializeField] private bool Akchecking = false;//false = 유저가 키를 입력해야 공격
-    [SerializeField] private float hitdamage = 0.0f;//공격데미지
     private float timer = 0.0f;
     [SerializeField] bool Isattack = false;
     //[SerializeField, Range(0.0f, 3.0f)] private float timerAttack = 0.5f;//공격하는 기준 
     //[SerializeField] private float Attackdamage = 0.0f;
+
+    [Header("플레이어스팩")]
+    [SerializeField] float PlayerHP = 10.0f;//플레이어 HP
+    [SerializeField] float moveSpeed = 5f;//플에이어 이속
+    float hitdamage = 0.0f;//플레이어 공격데미지
+    private float CurHp;
+    
 
     BoxCollider2D atboxcollider;
 
@@ -45,6 +50,7 @@ public class Player : MonoBehaviour
 
     void Awake()
     {
+        CurHp = PlayerHP;
         rigid = GetComponent<Rigidbody2D>();
         boxCollider2D = GetComponent<BoxCollider2D>();
         anim = GetComponent<Animator>();
@@ -71,14 +77,14 @@ public class Player : MonoBehaviour
         doAnimation();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Monster")
-        {
-            MonsterBoo Msattack = collision.GetComponent<MonsterBoo>();
-            Msattack.MsHit(hitdamage);
-        }
-    }
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision.gameObject.tag == "Monster")
+    //    {
+    //        MonsterBoo Msattack = collision.GetComponent<MonsterBoo>();
+    //        Msattack.MsHit(hitdamage);
+    //    }
+    //}
 
     private void moving()
     {
@@ -205,6 +211,16 @@ public class Player : MonoBehaviour
             //}
         //}
     }
+
+    public void PlayerHit(float _damage)//플레이어가 맞는 데미지
+    {
+        CurHp -= _damage;
+        if (CurHp <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private void doAnimation()
     {
         anim.SetBool("Isjump", isGround);
@@ -217,12 +233,12 @@ public class Player : MonoBehaviour
         //anim.SetBool("attacking", Isattack);
     }
 
-    private void ShootAtteck()
-    {
-        GameObject obj = Instantiate(objAttack, transform.position, Quaternion.identity, layerDynamic);
-        Attack objSc = obj.GetComponent<Attack>();
-        objSc.Akdamage(hitdamage);
-    }
+    //private void ShootAtteck()
+    //{
+    //    GameObject obj = Instantiate(objAttack, transform.position, Quaternion.identity, layerDynamic);
+    //    Attack objSc = obj.GetComponent<Attack>();
+    //    objSc.Akdamage(hitdamage);
+    //}
 
     private void testFunction()
     {
