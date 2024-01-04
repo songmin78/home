@@ -3,8 +3,8 @@ using UnityEngine;
 public class MonsterBoo : MonoBehaviour
 {
     Rigidbody2D rigid;
-    Vector3 moveDir;//default
     BoxCollider2D boxCollider2D;
+    Vector3 moveDir;
     Animator anim;
     [SerializeField] bool isGround = false;
     [SerializeField] LayerMask ground;
@@ -19,7 +19,7 @@ public class MonsterBoo : MonoBehaviour
     [SerializeField] float MaxHp = 1.0f;
     private float CurHp;
     [SerializeField] float MsSpeed = 1.0f;
-    [SerializeField] float MsDamage = 1.0f;
+    float MsDamage = 1.0f;
     [SerializeField] float Msturntime = 1.0f;
     private float Maxtime;
 
@@ -31,10 +31,6 @@ public class MonsterBoo : MonoBehaviour
         boxCollider2D = GetComponent<BoxCollider2D>();
         anim = GetComponent<Animator>();
     }
-    void Start()
-    {
-
-    }
 
     void Update()
     {
@@ -45,6 +41,8 @@ public class MonsterBoo : MonoBehaviour
         checkGravity();
 
         MsAttack();
+
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -166,11 +164,16 @@ public class MonsterBoo : MonoBehaviour
 
     public void MsHit(float _damage)
     {
-
         CurHp -= _damage;
         if (CurHp <= 0)
         {
             Destroy(gameObject);
+            
         }
     }
+
+    //private void Msanimation()
+    //{
+    //    anim.SetInteger("Msmove", (int)MsSpeed);
+    //}
 }
