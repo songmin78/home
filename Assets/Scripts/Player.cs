@@ -194,6 +194,7 @@ public class Player : MonoBehaviour
             }
             Isattack = true;
             anim.SetTrigger("IsAttack");
+            Isattack = false;
             //Invoke("testFunction", 1.5f);
 
         }
@@ -252,5 +253,4 @@ public class Player : MonoBehaviour
     {
         atboxcollider.enabled = false;
     }
-    
 }

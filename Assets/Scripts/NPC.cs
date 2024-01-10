@@ -4,7 +4,15 @@ using UnityEngine;
 
 public class NPC : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "Touch")
+        {
+            Debug.Log("°Å·¡");
+        }
+    }
+
+
     void Start()
     {
         
