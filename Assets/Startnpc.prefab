@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 8825991095084709691}
   - component: {fileID: 4030667343301553437}
   - component: {fileID: 4144575026712899811}
-  m_Layer: 0
+  - component: {fileID: 6504408364577201379}
+  m_Layer: 9
   m_Name: Startnpc
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33,7 +34,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5751255233251795083
 SpriteRenderer:
@@ -180,3 +181,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &6504408364577201379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3894188499626256684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dee5cc7750217141b887dac5c55cad4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
