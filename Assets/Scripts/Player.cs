@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
     [Header("플레이어스팩")]
     [SerializeField] float PlayerHP = 10.0f;//플레이어 HP
     [SerializeField] float moveSpeed = 5f;//플에이어 이속
-    float hitdamage = 0.0f;//플레이어 공격데미지
+    //float hitdamage = 0.0f;//플레이어 공격데미지
     private float CurHp;
     
 

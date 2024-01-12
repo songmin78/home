@@ -19,7 +19,6 @@ public class MonsterBoo : MonoBehaviour
     [SerializeField] float MaxHp = 1.0f;
     private float CurHp;
     [SerializeField] float MsSpeed = 1.0f;
-    float MsDamage = 1.0f;
     [SerializeField] float Msturntime = 1.0f;
     private float Maxtime;
 

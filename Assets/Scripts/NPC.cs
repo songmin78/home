@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class NPC : MonoBehaviour
 {
+    Rigidbody2D rigid;
+    BoxCollider2D boxCollider2D;
+    Transform layerDynamic;
+    BoxCollider2D Talkbox;
+
+    public float npctalkbox = 0;
+
+
     float Openbox = 0;
     BoxCollider2D boxColl;
 
@@ -39,6 +47,8 @@ public class NPC : MonoBehaviour
     private void Awake()
     {
         boxColl = GetComponent<BoxCollider2D>();
+        rigid = GetComponent<Rigidbody2D>();
+        //Talkbox = transform.Find("Talkbox1").GetComponent<BoxCollider2D>();
     }
 
     void Start()
@@ -58,14 +68,19 @@ public class NPC : MonoBehaviour
             Collider2D hit = Physics2D.OverlapBox(boxColl.bounds.center, boxColl.bounds.size, 0, LayerMask.GetMask("Touch"));
             if (hit != null)
             {
-                Debug.Log("아");
+                OpenBox();
             }
         }
     }
 
-    public void OpenBox(float _openbox)
+    public void OpenBox()
     {
-        Openbox = _openbox;
-        Debug.Log(Openbox);
+        Debug.Log("테스트");
+        Talkbox.enabled = true;
+    }
+
+    private void Opentalkbox()
+    {
+
     }
 }
