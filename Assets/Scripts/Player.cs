@@ -21,6 +21,9 @@ public class Player : MonoBehaviour
     [SerializeField] private float jumpForce = 5f;
     private Camera mainCam;
 
+    [Header("플레이어")]
+    [SerializeField] GameObject objPlayer;
+
     [Header("프리맵")]
     [SerializeField] private GameObject objAttack;
 

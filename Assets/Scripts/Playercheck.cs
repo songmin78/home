@@ -6,7 +6,11 @@ public class Playercheck : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Player playd = collision.GetComponent<Player>();
+        if (collision.gameObject.tag == "Player")
+        {
+            MonsterBoo chaseplayer = collision.GetComponent<MonsterBoo>();
+            chaseplayer.chaseplayer();
+        }
     }
 
     void Start()
