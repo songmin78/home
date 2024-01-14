@@ -6,7 +6,6 @@ TagManager:
   tags:
   - Monster
   - Touch
-  - NPC
   layers:
   - Default
   - TransparentFX
@@ -19,7 +18,7 @@ TagManager:
   - Monster
   - NPC
   - Touch
-  - Nextfild
+  - 
   - 
   - 
   - 

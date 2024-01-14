@@ -12,7 +12,7 @@ public class Attack : MonoBehaviour
     [SerializeField] float Monsterdamage = 0.0f;//몬스터가 플레이어에게 공격데미지
     [SerializeField] float Playerdamage = 0.0f;//플레이어가 몬스터에게 공격데미지
     [SerializeField] bool Isattack = false;
-    //private bool PlayerAttack = false;//플레이어가 한 공격이면 true
+    private bool PlayerAttack = false;//플레이어가 한 공격이면 true
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
