@@ -175,4 +175,10 @@ public class MonsterBoo : MonoBehaviour
     //{
     //    anim.SetInteger("Msmove", (int)MsSpeed);
     //}
+
+    public void chaseplayer()
+    {
+        Vector3 playerPos = objPlayer == null ? new Vector3(0, -3, 0) : objPlayer.transform.position;
+        float angle = Quaternion.FromToRotation(Vector3.up, playerPos - transform.position).eulerAngles.z;
+    }
 }
