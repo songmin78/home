@@ -8,7 +8,8 @@ public class Playercheck : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            MonsterBoo chaseplayer = collision.GetComponent<MonsterBoo>();
+            MonsterBoo chaseplayer = transform.parent.GetComponent<MonsterBoo>();
+            //MonsterBoo chaseplayer = GetComponentInParent<MonsterBoo>();
             chaseplayer.chaseplayer();
         }
     }

@@ -9,6 +9,7 @@ public class MonsterBoo : MonoBehaviour
     [SerializeField] bool isGround = false;
     [SerializeField] LayerMask ground;
     [SerializeField] Collider2D trigger;
+    [SerializeField] Player objPlayer;
 
     private bool isJump = false;
     private float verticalVelocity;//수직으로 받는 힘
@@ -22,11 +23,14 @@ public class MonsterBoo : MonoBehaviour
     float MsDamage = 1.0f;
     [SerializeField] float Msturntime = 1.0f;
     private float Maxtime;
+    [SerializeField] float Movetime = 5;
+    private float MaxMovetime;
 
     private void Awake()
     {
         CurHp = MaxHp;
         Maxtime = Msturntime;
+        MaxMovetime = Movetime;
         rigid = GetComponent<Rigidbody2D>();
         boxCollider2D = GetComponent<BoxCollider2D>();
         anim = GetComponent<Animator>();
@@ -45,13 +49,6 @@ public class MonsterBoo : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.gameObject.tag == "Player")
-        {
-
-        }
-    }
 
     private void Msmoving()
     {
@@ -179,7 +176,28 @@ public class MonsterBoo : MonoBehaviour
 
     public void chaseplayer()
     {
-        Vector3 playerPos = objPlayer == null ? new Vector3(0, -3, 0) : objPlayer.transform.position;
-        float angle = Quaternion.FromToRotation(Vector3.up, playerPos - transform.position).eulerAngles.z;
+        Vector3 scale = transform.localScale;
+        transform.localScale = scale;
+        while (MaxMovetime >=0)
+        {
+            if(MaxMovetime >=0)
+            {
+                Vector3 playerPos = objPlayer == null ? new Vector3(0, -3, 0) : objPlayer.transform.position;
+                if (scale.x == 1)
+                {
+                    float angle = Quaternion.FromToRotation(Vector3.right, playerPos - transform.position).eulerAngles.z;
+                }
+                else if(scale.x == -1)
+                {
+                    float angle = Quaternion.FromToRotation(Vector3.left, playerPos - transform.position).eulerAngles.z;
+                }
+                MaxMovetime -= Time.deltaTime;
+                Debug.Log(MaxMovetime);
+            }
+            else
+            {
+                break;
+            }
+        }
     }
 }

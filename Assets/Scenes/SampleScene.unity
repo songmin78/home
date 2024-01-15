@@ -471,6 +471,7 @@ MonoBehaviour:
   isGround: 0
   gravity: 9.81
   jumpForce: 5
+  objPlayer: {fileID: 0}
   objAttack: {fileID: 188893267}
   Akchecking: 0
   Isattack: 0
@@ -1626,7 +1627,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1369775973
 RectTransform:
   m_ObjectHideFlags: 0
