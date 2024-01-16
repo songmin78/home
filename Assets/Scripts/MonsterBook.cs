@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class MonsterBoo : MonoBehaviour
 {
@@ -10,11 +11,12 @@ public class MonsterBoo : MonoBehaviour
     [SerializeField] LayerMask ground;
     [SerializeField] Collider2D trigger;
     [SerializeField] Player objPlayer;
+    [SerializeField] Collider2D playercheck;
 
     private bool isJump = false;
     private float verticalVelocity;//수직으로 받는 힘
     [SerializeField] private float gravity = 9.81f;
-    [SerializeField] private float jumpForce = 5f;
+    [SerializeField] float jumpForce = 5f;
 
     [Header("몬스터 스펙")]
     [SerializeField] float MaxHp = 1.0f;
@@ -23,32 +25,48 @@ public class MonsterBoo : MonoBehaviour
     float MsDamage = 1.0f;
     [SerializeField] float Msturntime = 1.0f;
     private float Maxtime;
-    [SerializeField] float Movetime = 5;
-    private float MaxMovetime;
+    [SerializeField] int Movetime = 5;
+    private float MaxMovetime = 0.0f;//플레이어를 쫒아가는시간 최종적으로 0 쫒기시작하면 Movetime이 들어옴
+
+    Transform trsPlayer;
 
     private void Awake()
     {
         CurHp = MaxHp;
         Maxtime = Msturntime;
-        MaxMovetime = Movetime;
+        //MaxMovetime = Movetime;
         rigid = GetComponent<Rigidbody2D>();
         boxCollider2D = GetComponent<BoxCollider2D>();
         anim = GetComponent<Animator>();
+        //playercheck = transform.Find("Player").GetComponent<Collider2D>();
     }
 
     void Update()
     {
-        checkGround();
+        CheckGround();
 
         Msmoving();
 
         checkGravity();
 
+        ChasePlayercheck();
+
         MsAttack();
 
-
+        checkChaseTime();
     }
 
+    private void checkChaseTime()
+    {
+        if (MaxMovetime != 0.0f)//플레이어를 추적하라 명령이 들어온 상태
+        {
+            MaxMovetime -= Time.deltaTime;
+            if(MaxMovetime < 0.0f)//쫒기를 포기한 상태
+            {
+                MaxMovetime = 0.0f;
+            }
+        }
+    }
 
     private void Msmoving()
     {
@@ -56,16 +74,27 @@ public class MonsterBoo : MonoBehaviour
         {
             return;
         }
-        rigid.velocity = new Vector2(MsSpeed, rigid.velocity.y);
 
-        if (Maxtime > 0)
+        if (MaxMovetime == 0.0f)//플레이어를 추적하는 상태가 아닐때, 왔다갔다 하는 상태
         {
-            Maxtime -= Time.deltaTime;
+            rigid.velocity = new Vector2(MsSpeed, rigid.velocity.y);
+
+            if (Maxtime > 0)
+            {
+                Maxtime -= Time.deltaTime;
+            }
+            else if (Maxtime <= 0)
+            {
+                Timeturn();
+                Maxtime = Msturntime;
+            }
         }
-        else if (Maxtime <= 0)
+        else//플레이어를 추적하도록 함
         {
-            Timeturn();
-            Maxtime = Msturntime;
+            Vector3 playerPos = trsPlayer.position;
+            //플레이어가 왼쪽을 보고 있다면 왼쪽, 오른쪽에있다면 오른쪽
+            Debug.Log(playerPos);
+            rigid.velocity = new Vector2(MsSpeed, playerPos.y);
         }
     }
 
@@ -82,7 +111,7 @@ public class MonsterBoo : MonoBehaviour
         
     }
 
-    private void checkGround()
+    private void CheckGround()
     {
         isGround = false;
         if (verticalVelocity > 0)//5
@@ -174,30 +203,41 @@ public class MonsterBoo : MonoBehaviour
     //    anim.SetInteger("Msmove", (int)MsSpeed);
     //}
 
-    public void chaseplayer()
+    public void chaseplayer(Transform _trsPlayer)
     {
-        Vector3 scale = transform.localScale;
-        transform.localScale = scale;
-        while (MaxMovetime >=0)
-        {
-            if(MaxMovetime >=0)
-            {
-                Vector3 playerPos = objPlayer == null ? new Vector3(0, -3, 0) : objPlayer.transform.position;
-                if (scale.x == 1)
-                {
-                    float angle = Quaternion.FromToRotation(Vector3.right, playerPos - transform.position).eulerAngles.z;
-                }
-                else if(scale.x == -1)
-                {
-                    float angle = Quaternion.FromToRotation(Vector3.left, playerPos - transform.position).eulerAngles.z;
-                }
-                MaxMovetime -= Time.deltaTime;
-                Debug.Log(MaxMovetime);
-            }
-            else
-            {
-                break;
-            }
-        }
+        trsPlayer = _trsPlayer;
+        if (MaxMovetime != 0.0f) return;
+
+        MaxMovetime = Movetime;
+
+        //Vector3 scale = transform.localScale;
+        //transform.localScale = scale;
+        //while (MaxMovetime >=0)
+        //{
+        //    if(MaxMovetime >=0)
+        //    {
+        //        Vector3 playerPos = objPlayer == null ? new Vector3(0, 0, 0) : objPlayer.transform.position;
+        //        if (scale.x == 1)
+        //        {
+        //            float angle = Quaternion.FromToRotation(Vector3.right, playerPos - transform.position).eulerAngles.x;
+        //        }
+        //        else if(scale.x == -1)
+        //        {
+        //            float angle = Quaternion.FromToRotation(Vector3.left, playerPos - transform.position).eulerAngles.x;
+        //        }
+        //        MaxMovetime -= Time.deltaTime;
+        //    }
+        //    else
+        //    {
+        //        break;
+        //    }
+        //}
+        //Invoke("Chasemove", (float)MaxMovetime);
+        //MaxMovetime = Movetime;
+    }
+
+    private void ChasePlayercheck()//플레이어의 위치를 상시 체크
+    {
+        //playercheck
     }
 }

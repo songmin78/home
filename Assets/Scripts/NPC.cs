@@ -63,9 +63,11 @@ public class NPC : MonoBehaviour
         }
     }
 
-    public void OpenBox(float _openbox)
+    public void OpenBox(float _openbox,Collider2D collision)
     {
         Openbox = _openbox;
         Debug.Log(Openbox);
     }
+
+    
 }

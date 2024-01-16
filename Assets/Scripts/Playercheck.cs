@@ -10,7 +10,7 @@ public class Playercheck : MonoBehaviour
         {
             MonsterBoo chaseplayer = transform.parent.GetComponent<MonsterBoo>();
             //MonsterBoo chaseplayer = GetComponentInParent<MonsterBoo>();
-            chaseplayer.chaseplayer();
+            chaseplayer.chaseplayer(collision.transform);
         }
     }
 
