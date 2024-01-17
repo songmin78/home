@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class MonsterBoo : MonoBehaviour
 {
@@ -92,10 +91,21 @@ public class MonsterBoo : MonoBehaviour
         else//플레이어를 추적하도록 함
         {
             Vector3 playerPos = trsPlayer.position;
+            Vector3 MonsterPos = transform.position;
             //플레이어가 왼쪽을 보고 있다면 왼쪽, 오른쪽에있다면 오른쪽
-            Debug.Log(playerPos);
-            rigid.velocity = new Vector2(MsSpeed, playerPos.y);
+            float right = playerPos.x - MonsterPos.x;
+            if (right > 0)
+            {
+                rigid.velocity = new Vector2(-MsSpeed, rigid.velocity.y);
+                //Debug.Log("오른쪽");
+            }
+            else if (right < 0)
+            {
+                rigid.velocity = new Vector2(MsSpeed, rigid.velocity.y);
+                //Debug.Log("왼쪽");
+            }
         }
+        //Debug.Log(MaxMovetime);
     }
 
     private void FixedUpdate()
@@ -188,7 +198,7 @@ public class MonsterBoo : MonoBehaviour
         }
     }
 
-    public void MsHit(float _damage)
+    public void MsHit(float _damage)//슬라임이 공격에 맞았을때
     {
         CurHp -= _damage;
         if (CurHp <= 0)

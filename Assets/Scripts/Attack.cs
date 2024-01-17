@@ -33,6 +33,7 @@ public class Attack : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         boxCollider2D = GetComponent<BoxCollider2D>();
     }
+
     public void Akdamage(float _damage)
     {
         Playerdamage = _damage;
@@ -41,4 +42,5 @@ public class Attack : MonoBehaviour
     {
         Monsterdamage = _pkdamage;
     }
+
 }

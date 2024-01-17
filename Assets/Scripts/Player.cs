@@ -11,7 +11,6 @@ public class Player : MonoBehaviour
     Vector3 moveDir;//default
     BoxCollider2D boxCollider2D;
     Animator anim;
-    Transform layerDynamic;
 
     [SerializeField] bool isGround = false;//false 공중에 떠있는 상태, true 땅에 붙어있는 상태
 
@@ -20,6 +19,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float gravity = 9.81f;
     [SerializeField] private float jumpForce = 5f;
     private Camera mainCam;
+    Transform trsMonster;
 
     [Header("플레이어")]
     [SerializeField] GameObject objPlayer;
@@ -50,6 +50,14 @@ public class Player : MonoBehaviour
     //private bool doWallStepTimer = false;
     //private float wallStepTimer = 0.0f;
     //[SerializeField] private float wallStepTime = 0.3f;
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "Monster")
+        {
+            trsMonster= collision.transform;
+        }
+    }
 
     void Awake()
     {
@@ -223,6 +231,22 @@ public class Player : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        else
+        {
+            Vector3 PlayerPos = transform.position;
+            Vector3 MsPos = trsMonster.position;
+            float right = PlayerPos.x - MsPos.x;
+            Debug.Log(MsPos);
+            if (right > 0 )
+            {
+                
+                Debug.Log("오른쪽");
+            }
+            else if(right < 0)
+            {
+                Debug.Log("왼쪽");
+            }
+        }
     }
 
     private void doAnimation()
@@ -246,6 +270,7 @@ public class Player : MonoBehaviour
 
     private void testFunction()
     {
+
     }
 
     private void AttackInBox()
