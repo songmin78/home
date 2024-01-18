@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Transactions;
 using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
@@ -39,7 +41,8 @@ public class Player : MonoBehaviour
     [SerializeField] float moveSpeed = 5f;//플에이어 이속
     float hitdamage = 0.0f;//플레이어 공격데미지
     private float CurHp;
-    
+    private bool Playerpush = false;//플레이어가 현재 밀리고있는지 아닌지 확인
+    [SerializeField] float pushtime = 1;//플레이어가 밀리는 시간
 
     BoxCollider2D atboxcollider;
 
@@ -86,6 +89,8 @@ public class Player : MonoBehaviour
         checkGravity();
 
         doAnimation();
+
+        testFunction();
     }
 
     //private void OnTriggerEnter2D(Collider2D collision)
@@ -99,7 +104,12 @@ public class Player : MonoBehaviour
 
     private void moving()
     {
-        moveDir.x = Input.GetAxisRaw("Horizontal") * moveSpeed;
+        if(Playerpush == true)
+        {
+            return;
+        }
+ 
+       moveDir.x = Input.GetAxisRaw("Horizontal") * moveSpeed;
         moveDir.y = rigid.velocity.y;
         rigid.velocity = moveDir;
     }
@@ -150,7 +160,7 @@ public class Player : MonoBehaviour
         //    isJump = true;
         //}
 
-        if (Input.GetKeyDown(KeyCode.Space) && isGround == true)
+        if (Playerpush == false && Input.GetKeyDown(KeyCode.Space) && isGround == true)
         {
             isJump = true;
         }
@@ -224,7 +234,7 @@ public class Player : MonoBehaviour
         //}
     }
 
-    public void PlayerHit(float _damage)//플레이어가 맞는 데미지
+    public void PlayerHit(float _damage, Vector3 _curPos)//플레이어가 맞는 데미지
     {
         CurHp -= _damage;
         if (CurHp <= 0)
@@ -233,18 +243,46 @@ public class Player : MonoBehaviour
         }
         else
         {
-            Vector3 PlayerPos = transform.position;
-            Vector3 MsPos = trsMonster.position;
-            float right = PlayerPos.x - MsPos.x;
+            
+            Playerpush = true;
+            Vector3 PlayerPos = transform.position;//플레이어의 위치
+            Vector3 MsPos = _curPos;//몬스터의 위치
+            moveDir.x = rigid.velocity.x;//플레이어가 이동된 위치
+            float right = PlayerPos.x - MsPos.x;//플레이어가 몬스터에게 맞았을때 위치확인
             Debug.Log(MsPos);
             if (right > 0 )
             {
                 
-                Debug.Log("오른쪽");
+                //moveDir.x = PlayerPos.x + 1;
+                //rigid.velocity = moveDir;
+                //Debug.Log("오른쪽");
+                //if (pushtime < 0)//pushtime이 0보다 작을때 밀쳐내는것을 그만한다
+                //{
+                //    Playerpush = false;
+                //}
+                //pushtime -= Time.deltaTime;
+                ////Playerpush = false;
+
+                while(pushtime > 0)
+                {
+                    moveDir.x = PlayerPos.x + 1;
+                    rigid.velocity = moveDir;
+                    pushtime -= Time.deltaTime;
+                }
+                Playerpush = false;
+
+                anim.SetTrigger("Test");
+                Debug.Log(pushtime);
+                Debug.Log(Playerpush);
+
             }
             else if(right < 0)
             {
+                moveDir.x = PlayerPos.x - 10;
+                rigid.velocity = moveDir;
+                anim.SetTrigger("Test");
                 Debug.Log("왼쪽");
+                Playerpush = false;
             }
         }
     }
@@ -270,7 +308,14 @@ public class Player : MonoBehaviour
 
     private void testFunction()
     {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            anim.SetTrigger("Test");
+        }
+        else if (Input.GetKeyDown(KeyCode.N))
+        {
 
+        }
     }
 
     private void AttackInBox()

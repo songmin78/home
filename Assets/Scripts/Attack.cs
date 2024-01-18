@@ -24,7 +24,7 @@ public class Attack : MonoBehaviour
         else if(collision.gameObject.tag == "Player")
         {
             Player playHit = collision.GetComponent<Player>();
-            playHit.PlayerHit(Monsterdamage);
+            playHit.PlayerHit(Monsterdamage, transform.position);
         }
     }
 
