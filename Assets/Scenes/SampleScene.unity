@@ -477,6 +477,7 @@ MonoBehaviour:
   Isattack: 0
   PlayerHP: 10
   moveSpeed: 5
+  pushtime: 5
 --- !u!61 &359331611
 BoxCollider2D:
   m_ObjectHideFlags: 0
