@@ -1896,6 +1896,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MsSlime
       objectReference: {fileID: 0}
+    - target: {fileID: 9118921417295626427, guid: 0ed9d2be94cd0594795d841c16c8b8ee, type: 3}
+      propertyPath: Monsterdamage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9135908891513171812, guid: 0ed9d2be94cd0594795d841c16c8b8ee, type: 3}
       propertyPath: m_IsTrigger
       value: 1
