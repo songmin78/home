@@ -142,7 +142,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.5304875, y: 0.0024052262}
+  m_Offset: {x: 0.7969543, y: 0.03971058}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -153,7 +153,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.8788438, y: 0.63539445}
+  m_Size: {x: 1.4117773, y: 0.71000516}
   m_EdgeRadius: 0
 --- !u!114 &9069708119200457432
 MonoBehaviour:
@@ -404,7 +404,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0003207326, y: -0.1950347}
+  m_Offset: {x: -0.001039356, y: -0.2043777}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -415,7 +415,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.53007233, y: 0.25813988}
+  m_Size: {x: 0.48838824, y: 0.23945388}
   m_EdgeRadius: 0
 --- !u!50 &8613497378589515364
 Rigidbody2D:
@@ -461,8 +461,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   trigger: {fileID: 0}
+  objPlayer: {fileID: 0}
+  playercheck: {fileID: 0}
   gravity: 9.81
   jumpForce: 5
   MaxHp: 1
   MsSpeed: 1
   Msturntime: 1
+  Movetime: 5

@@ -96,13 +96,13 @@ public class MonsterBoo : MonoBehaviour
             float right = playerPos.x - MonsterPos.x;
             if (right > 0)
             {
-                rigid.velocity = new Vector2(-MsSpeed, rigid.velocity.y);
-                //Debug.Log("坷弗率");
+                rigid.velocity = new Vector2(-MsSpeed * 1.5f, rigid.velocity.x);
+                Debug.Log("坷弗率");
             }
             else if (right < 0)
             {
-                rigid.velocity = new Vector2(MsSpeed, rigid.velocity.y);
-                //Debug.Log("哭率");
+                rigid.velocity = new Vector2(MsSpeed * 1.5f, rigid.velocity.x);
+                Debug.Log("哭率");
             }
         }
         //Debug.Log(MaxMovetime);

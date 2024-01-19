@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float jumpForce = 5f;
     private Camera mainCam;
     Transform trsMonster;
+    private float rightleftcheck = 0;//오른쪽 왼쪽 확인 1은 오른쪽 2는 왼쪽
 
     [Header("플레이어")]
     [SerializeField] GameObject objPlayer;
@@ -43,6 +44,7 @@ public class Player : MonoBehaviour
     private float CurHp;
     private bool Playerpush = false;//플레이어가 현재 밀리고있는지 아닌지 확인
     [SerializeField] float pushtime = 1;//플레이어가 밀리는 시간
+    private float Maxpushtime;
 
     BoxCollider2D atboxcollider;
 
@@ -64,6 +66,7 @@ public class Player : MonoBehaviour
 
     void Awake()
     {
+        Maxpushtime = pushtime;
         CurHp = PlayerHP;
         rigid = GetComponent<Rigidbody2D>();
         boxCollider2D = GetComponent<BoxCollider2D>();
@@ -82,6 +85,7 @@ public class Player : MonoBehaviour
 
         moving();
         turning();
+        pushtimed();
 
         jumping();
         Attackcheck();
@@ -247,42 +251,44 @@ public class Player : MonoBehaviour
             Playerpush = true;
             Vector3 PlayerPos = transform.position;//플레이어의 위치
             Vector3 MsPos = _curPos;//몬스터의 위치
-            moveDir.x = rigid.velocity.x;//플레이어가 이동된 위치
+
             float right = PlayerPos.x - MsPos.x;//플레이어가 몬스터에게 맞았을때 위치확인
-            Debug.Log(MsPos);
             if (right > 0 )
             {
-                
-                //moveDir.x = PlayerPos.x + 1;
-                //rigid.velocity = moveDir;
-                //Debug.Log("오른쪽");
+                PlayerPos.x += 0.25f;
+                rigid.velocity = PlayerPos;
+                anim.SetTrigger("Test");
+                rightleftcheck = 1;
+
                 //if (pushtime < 0)//pushtime이 0보다 작을때 밀쳐내는것을 그만한다
                 //{
                 //    Playerpush = false;
                 //}
                 //pushtime -= Time.deltaTime;
+                //Playerpush = false;
+
+                //while(pushtime > 0)
+                //{
+                //    moveDir.x = PlayerPos.x + 1;
+                //    rigid.velocity = moveDir;
+                //    pushtime -= Time.deltaTime;
+                //}
                 ////Playerpush = false;
 
-                while(pushtime > 0)
-                {
-                    moveDir.x = PlayerPos.x + 1;
-                    rigid.velocity = moveDir;
-                    pushtime -= Time.deltaTime;
-                }
-                Playerpush = false;
-
-                anim.SetTrigger("Test");
-                Debug.Log(pushtime);
-                Debug.Log(Playerpush);
+                //anim.SetTrigger("Test");
+                //Debug.Log(pushtime);
+                //Debug.Log(Playerpush);
 
             }
             else if(right < 0)
             {
-                moveDir.x = PlayerPos.x - 10;
-                rigid.velocity = moveDir;
+                PlayerPos.x -= 0.25f;
+                rigid.velocity = PlayerPos;
                 anim.SetTrigger("Test");
-                Debug.Log("왼쪽");
-                Playerpush = false;
+                rightleftcheck = 2;
+                //anim.SetTrigger("Test");
+                //Debug.Log("왼쪽");
+                //Playerpush = false;
             }
         }
     }
@@ -325,5 +331,40 @@ public class Player : MonoBehaviour
     private void AttackoutBox()
     {
         atboxcollider.enabled = false;
+    }
+    
+    private void pushtimed()
+    {
+        if (Playerpush == true)
+        {
+            //Vector3 PlayerPos = transform.position;//플레이어의 위치
+            //moveDir.x = rigid.velocity.x;//플레이어가 이동된 위치
+
+            if(rightleftcheck == 1)
+            {
+                //moveDir.x = PlayerPos.x + 1;
+                Maxpushtime -= Time.deltaTime;
+                if (Maxpushtime < 0)//pushtime이 0보다 작을때 밀쳐내는것을 그만한다
+                {
+                    Playerpush = false;
+                }
+            }
+            else if(rightleftcheck == 2)
+            {
+                //moveDir.x = PlayerPos.x - 1;
+                Maxpushtime -= Time.deltaTime;
+                if (Maxpushtime < 0)//pushtime이 0보다 작을때 밀쳐내는것을 그만한다
+                {
+                    Playerpush = false;
+                }
+            }
+            
+        }
+        if(Playerpush == false)
+        {
+            rightleftcheck = 0;
+            Maxpushtime = pushtime;
+        }
+
     }
 }
