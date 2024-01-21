@@ -249,47 +249,49 @@ public class Player : MonoBehaviour
         {
             
             Playerpush = true;
-            Vector3 PlayerPos = transform.position;//플레이어의 위치
-            Vector3 MsPos = _curPos;//몬스터의 위치
+            
+            //Vector3 PlayerPos = transform.position;//플레이어의 위치
+            //Vector3 MsPos = _curPos;//몬스터의 위치
 
-            float right = PlayerPos.x - MsPos.x;//플레이어가 몬스터에게 맞았을때 위치확인
-            if (right > 0 )
-            {
-                PlayerPos.x += 0.25f;
-                rigid.velocity = PlayerPos;
-                anim.SetTrigger("Test");
-                rightleftcheck = 1;
+            //float right = PlayerPos.x - MsPos.x;//플레이어가 몬스터에게 맞았을때 위치확인
+            //if (right > 0 )
+            //{
 
-                //if (pushtime < 0)//pushtime이 0보다 작을때 밀쳐내는것을 그만한다
-                //{
-                //    Playerpush = false;
-                //}
-                //pushtime -= Time.deltaTime;
-                //Playerpush = false;
+            //    //PlayerPos.x += 0.25f;
+            //    //rigid.velocity = PlayerPos;
+            //    //anim.SetTrigger("Test");
+            //    //rightleftcheck = 1;
 
-                //while(pushtime > 0)
-                //{
-                //    moveDir.x = PlayerPos.x + 1;
-                //    rigid.velocity = moveDir;
-                //    pushtime -= Time.deltaTime;
-                //}
-                ////Playerpush = false;
+            //    //if (pushtime < 0)//pushtime이 0보다 작을때 밀쳐내는것을 그만한다
+            //    //{
+            //    //    Playerpush = false;
+            //    //}
+            //    //pushtime -= Time.deltaTime;
+            //    //Playerpush = false;
 
-                //anim.SetTrigger("Test");
-                //Debug.Log(pushtime);
-                //Debug.Log(Playerpush);
+            //    //while(pushtime > 0)
+            //    //{
+            //    //    moveDir.x = PlayerPos.x + 1;
+            //    //    rigid.velocity = moveDir;
+            //    //    pushtime -= Time.deltaTime;
+            //    //}
+            //    ////Playerpush = false;
 
-            }
-            else if(right < 0)
-            {
-                PlayerPos.x -= 0.25f;
-                rigid.velocity = PlayerPos;
-                anim.SetTrigger("Test");
-                rightleftcheck = 2;
-                //anim.SetTrigger("Test");
-                //Debug.Log("왼쪽");
-                //Playerpush = false;
-            }
+            //    //anim.SetTrigger("Test");
+            //    //Debug.Log(pushtime);
+            //    //Debug.Log(Playerpush);
+
+            //}
+            //else if(right < 0)
+            //{
+            //    //PlayerPos.x -= 0.25f;
+            //    //rigid.velocity = PlayerPos;
+            //    //anim.SetTrigger("Test");
+            //    //rightleftcheck = 2;
+            //    //anim.SetTrigger("Test");
+            //    //Debug.Log("왼쪽");
+            //    //Playerpush = false;
+            //}
         }
     }
 
@@ -367,4 +369,28 @@ public class Player : MonoBehaviour
         }
 
     }
+
+    private void pushtimetrue()
+    {
+        if(Playerpush == true)
+        {
+            Vector3 PlayerPos = transform.position;//플레이어의 위치
+            Vector3 MsPos = transform.position;//몬스터의 위치
+
+            float right = PlayerPos.x - MsPos.x;//플레이어가 몬스터에게 맞았을때 위치확인
+            if (right > 0)
+            {
+                PlayerPos.x += 0.25f;
+                rigid.velocity = PlayerPos;
+                rightleftcheck = 1;
+            }
+            else if (right < 0)
+            {
+                PlayerPos.x -= 0.25f;
+                rigid.velocity = PlayerPos;
+                rightleftcheck = 2;
+            }
+        }
+    }
+
 }
