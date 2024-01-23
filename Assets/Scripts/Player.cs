@@ -249,7 +249,8 @@ public class Player : MonoBehaviour
         {
             
             Playerpush = true;
-            
+            anim.SetTrigger("Test");
+
             //Vector3 PlayerPos = transform.position;//플레이어의 위치
             //Vector3 MsPos = _curPos;//몬스터의 위치
 
@@ -391,6 +392,11 @@ public class Player : MonoBehaviour
                 rightleftcheck = 2;
             }
         }
+    }
+
+    private void pushtimefalse()
+    {
+        Playerpush = false;
     }
 
 }

@@ -475,7 +475,7 @@ MonoBehaviour:
   objAttack: {fileID: 188893267}
   Akchecking: 0
   Isattack: 0
-  PlayerHP: 10
+  PlayerHP: 3
   moveSpeed: 5
   pushtime: 1
 --- !u!61 &359331611
